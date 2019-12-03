@@ -1,0 +1,28 @@
+.cuadrado-1 {
+  background: #111;
+  color: #fff;
+  height: 200px;
+  margin-top: 5px;
+  padding: 10px;
+  width: 330px;
+}
+
+.cuadrado-2 {
+  background: #222;
+  color: #fff;
+  height: 200px;
+  margin-top: 5px;
+  padding: 10px;
+  width: 100px;
+}
+
+.cuadrado-3 {
+  background: #333;
+  color: #fff;
+  height: 200px;
+  margin-top: 5px;
+  padding: 10px;
+  width: 600px;
+}
+
+/*# sourceMappingURL=mixin.css.map */
