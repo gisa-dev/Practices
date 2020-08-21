@@ -1,8 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { Character } from '../../../../shared/interfaces/character.interface';
+import { Component, OnInit, Inject, HostListener } from '@angular/core';
+import {
+  ActivatedRoute,
+  ParamMap,
+  Router,
+  NavigationEnd,
+} from '@angular/router';
+
+import { DOCUMENT } from '@angular/common';
+
+import { take, filter } from 'rxjs/operators';
+
 import { CharacterService } from '../../../../shared/services/character.service';
-import { take } from 'rxjs/operators';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Character } from '../../../../shared/interfaces/character.interface';
 
 type RequestInfo = {
   next: string;
@@ -18,17 +27,63 @@ export class CharacterListComponent implements OnInit {
     next: null,
   };
 
+  public showGoUpButton = false;
   private pageNum = 1;
   private query: string;
   private hideScrollHeight = 200;
   private showScrollHeight = 500;
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     private characterSvc: CharacterService,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.onUrlChanged();
+  }
 
   ngOnInit(): void {
     this.getCharactersByQuery();
+  }
+
+  @HostListener('window: scroll', [])
+  onWindowScroll(): void {
+    const yOffSet = window.pageYOffset;
+    if (
+      (yOffSet ||
+        this.document.documentElement.scrollTop ||
+        this.document.body.scrollTop) > this.showScrollHeight
+    ) {
+      this.showGoUpButton = true;
+    } else if (
+      this.showGoUpButton &&
+      (yOffSet ||
+        this.document.documentElement.scrollTop ||
+        this.document.body.scrollTop) < this.hideScrollHeight
+    ) {
+      this.showGoUpButton = false;
+    }
+  }
+
+  onScrollDown(): void {
+    if (this.info.next) {
+      this.pageNum++;
+      this.getDataFromService();
+    }
+  }
+
+  onScrollTop(): void {
+    this.document.body.scrollTop = 0; // Safari
+    this.document.documentElement.scrollTop = 0; // Other
+  }
+
+  private onUrlChanged(): void {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.characters = [];
+        this.pageNum = 1;
+        this.getCharactersByQuery();
+      });
   }
 
   private getCharactersByQuery(): void {
