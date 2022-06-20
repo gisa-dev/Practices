@@ -1,2 +1,2 @@
-# Practicas de HTML/CSS/JavaScript
+# Practices HTML/CSS/JavaScript
 
