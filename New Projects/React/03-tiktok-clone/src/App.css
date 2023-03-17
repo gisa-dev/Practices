@@ -1,0 +1,16 @@
+
+.App {
+  background: #000;
+  height: 100vh;
+  color: #fff;
+  display: grid;
+  place-content: center;
+}
+
+main {
+  border: 1px solid #fff;
+  aspect-ratio: 9/16;
+  border-radius: 0.1875rem;
+  max-width: 23.4375rem;
+  width: 100vw;
+}
