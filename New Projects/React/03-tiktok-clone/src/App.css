@@ -8,9 +8,11 @@
 }
 
 main {
-  border: 1px solid #fff;
   aspect-ratio: 9/16;
+  overflow-y: scroll;
   border-radius: 0.1875rem;
   max-width: 23.4375rem;
   width: 100vw;
+  height: auto;
+  display: block;
 }
