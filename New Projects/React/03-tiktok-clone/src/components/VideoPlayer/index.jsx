@@ -1,11 +1,10 @@
 import {useRef, useState} from 'react';
 import styles from './styles.module.css';
 import clsx from 'clsx';
+import VideoPlayerActions from './VideoPlayerActions';
+import VideoDescription from '../VideoDescription';
 
-const SRC =
-	'https://mazwai.com/videvo_files/video/free/2018-03/small_watermarked/180301_16_B_LunarYearsParade_20_preview.webm';
-
-const index = () => {
+const VideoPlayer = ({src, albumCover, author, description}) => {
 	const [playing, setPlaying] = useState(false);
 	const video = useRef(null);
 
@@ -21,17 +20,24 @@ const index = () => {
 	});
 
 	return (
-		<>
+		<div className={styles.wrapper}>
 			<video
-				ref={video}
 				className={styles.video}
-				src={SRC}
 				controls={false}
+				loop
 				onClick={handlePlay}
+				ref={video}
+				src={src}
 			/>
 			<i className={playerClassName} onClick={handlePlay} />
-		</>
+			<VideoPlayerActions />
+			<VideoDescription
+				albumCover={albumCover}
+				author={author}
+				description={description}
+			/>
+		</div>
 	);
 };
 
-export default index;
+export default VideoPlayer;

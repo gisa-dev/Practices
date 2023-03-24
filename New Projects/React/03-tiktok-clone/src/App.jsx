@@ -1,12 +1,11 @@
 import './App.css';
-
-import VideoPlayer from './components/VideoPlayer/index';
+import FeedVideos from './components/FeedVideos';
 
 function App() {
 	return (
 		<div className="App">
 			<main>
-				<VideoPlayer/>
+				<FeedVideos/>
 			</main>
 		</div>
 	);

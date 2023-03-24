@@ -1,18 +1,19 @@
-
 .App {
-  background: #000;
-  height: 100vh;
-  color: #fff;
-  display: grid;
-  place-content: center;
+	background: #000;
+	color: #fff;
+	display: grid;
+	height: 100vh;
+	overflow: hidden;
+	place-content: center;
 }
 
 main {
-  aspect-ratio: 9/16;
-  overflow-y: scroll;
-  border-radius: 0.1875rem;
-  max-width: 23.4375rem;
-  width: 100vw;
-  height: auto;
-  display: block;
+	aspect-ratio: 9/16;
+	border-radius: 0.1875rem;
+	display: block;
+	height: auto;
+	max-width: 23.4375rem;
+	overflow-y: scroll;
+	scroll-snap-type: y mandatory;
+	
 }
