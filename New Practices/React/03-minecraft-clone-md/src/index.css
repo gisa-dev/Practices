@@ -30,3 +30,25 @@ body {
 	transform: translate(-50%, -50%);
 	opacity: 0.5;
 }
+
+.texture-select {
+	border: 0.3125rem solid #000;
+	background-color: #aaa;
+	padding: 1rem;
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	display: flex;
+	gap: 1rem;
+}
+
+.texture-select img {
+	border: 0.3125rem solid #000;
+	width: 6.25rem;
+	image-rendering: pixelated;
+}
+
+.texture-select img.selected {
+	border-color: red;
+}

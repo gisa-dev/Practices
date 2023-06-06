@@ -1,7 +1,11 @@
 import { useBox } from '@react-three/cannon';
 import * as textures from '../images/textures.js';
+import { useState } from 'react';
+import { useStore } from '../hooks/useStore.js';
 
 export const Cube = ({ id, position, texture }) => {
+	const [removeCube] = useStore((state) => [state.removeCube]);
+	const [isHovered, setIsHovered] = useState(false);
 	const [ref] = useBox(() => ({
 		type: 'Static',
 		position,
@@ -9,12 +13,31 @@ export const Cube = ({ id, position, texture }) => {
 
 	const activeTexture = textures[`${texture}Texture`];
 
-	console.log({ activeTexture });
-
 	return (
-		<mesh ref={ref}>
+		<mesh
+			ref={ref}
+			onPointerMove={(event) => {
+				event.stopPropagation();
+				setIsHovered(true);
+			}}
+			onPointerOut={(event) => {
+				event.stopPropagation();
+				setIsHovered(false);
+			}}
+			onClick={(event) => {
+				event.stopPropagation();
+				if (event.altKey) {
+					removeCube(id);
+				}
+			}}
+		>
 			<boxGeometry attach='geometry' />
-			<meshStandardMaterial attach='material' map={activeTexture} />
+			<meshStandardMaterial
+				transparent
+				attach='material'
+				map={activeTexture}
+				color={isHovered ? 'grey' : 'white'}
+			/>
 		</mesh>
 	);
 };
