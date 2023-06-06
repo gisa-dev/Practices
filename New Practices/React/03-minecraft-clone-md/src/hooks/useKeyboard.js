@@ -55,5 +55,5 @@ export const useKeyboard = () => {
 		};
 	}, []);
 
-	return { actions };
+	return actions;
 };

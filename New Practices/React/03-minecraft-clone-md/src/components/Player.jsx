@@ -1,14 +1,14 @@
-import { useSphere } from '@react-three/cannon';
 import { useFrame, useThree } from '@react-three/fiber';
+import { useKeyboard } from '../hooks/useKeyboard';
+import { useSphere } from '@react-three/cannon';
 import { useEffect, useRef } from 'react';
 import { Vector3 } from 'three';
-import { useKeyboard } from '../hooks/useKeyboard';
 
-const CHARACTER_SPEED = 5;
-const CHARACTER_JUMP_FORCE = 10;
+const CHARACTER_SPEED = 4;
+const CHARACTER_JUMP_FORCE = 4;
 
 export const Player = () => {
-	const { moveForward, moveBackward, moveLeft, moveRight, jump } =
+	const { moveBackward, moveForward, moveLeft, moveRight, jump } =
 		useKeyboard();
 
 	const { camera } = useThree();
@@ -19,7 +19,6 @@ export const Player = () => {
 	}));
 
 	const pos = useRef([0, 0, 0]);
-
 	useEffect(() => {
 		api.position.subscribe((p) => {
 			pos.current = p;
@@ -27,10 +26,9 @@ export const Player = () => {
 	}, [api.position]);
 
 	const vel = useRef([0, 0, 0]);
-
 	useEffect(() => {
-		api.velocity.subscribe((v) => {
-			vel.current = v;
+		api.velocity.subscribe((p) => {
+			vel.current = p;
 		});
 	}, [api.velocity]);
 
@@ -50,13 +48,25 @@ export const Player = () => {
 			0,
 			(moveBackward ? 1 : 0) - (moveForward ? 1 : 0),
 		);
+
 		const sideVector = new Vector3(
 			(moveLeft ? 1 : 0) - (moveRight ? 1 : 0),
 			0,
 			0,
 		);
 
-		direction.subVectors(frontVector, sideVector).normalize().multiplyScalar(5);
+		direction
+			.subVectors(frontVector, sideVector)
+			.normalize()
+			.multiplyScalar(CHARACTER_SPEED)
+			.applyEuler(camera.rotation);
+
+		api.velocity.set(direction.x, vel.current[1], direction.z);
+
+		if (jump && Math.abs(vel.current[1]) < 0.05) {
+			api.velocity.set(vel.current[0], CHARACTER_JUMP_FORCE, vel.current[2]);
+		}
 	});
+
 	return <mesh ref={ref} />;
 };
