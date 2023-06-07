@@ -27,8 +27,8 @@ export const Player = () => {
 
 	const vel = useRef([0, 0, 0]);
 	useEffect(() => {
-		api.velocity.subscribe((p) => {
-			vel.current = p;
+		api.velocity.subscribe((v) => {
+			vel.current = v;
 		});
 	}, [api.velocity]);
 
