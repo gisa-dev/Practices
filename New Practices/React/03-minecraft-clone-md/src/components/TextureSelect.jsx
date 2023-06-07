@@ -12,6 +12,8 @@ export const TextureSelect = () => {
 
 	const { dirt, grass, glass, wood, log } = useKeyboard();
 
+	
+
 	useEffect(() => {
 		const options = { dirt, grass, glass, wood, log };
 		const selectedTexture = Object.entries(options).find(

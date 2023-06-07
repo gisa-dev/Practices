@@ -32,20 +32,22 @@ body {
 }
 
 .texture-select {
-	border: 0.3125rem solid #000;
+	border: 0.1875rem solid #000;
 	background-color: #aaa;
-	padding: 1rem;
+	padding: 0.5rem;
 	position: absolute;
 	bottom: 0;
 	left: 50%;
-	transform: translate(-50%, -50%);
+	transform: translateX(-50%);
+	margin: auto;
+
 	display: flex;
-	gap: 1rem;
+	gap: 0.5rem;
 }
 
 .texture-select img {
-	border: 0.3125rem solid #000;
-	width: 6.25rem;
+	border: 0.1875rem solid #000;
+	width: 3.125rem;
 	image-rendering: pixelated;
 }
 
